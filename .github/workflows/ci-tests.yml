@@ -19,7 +19,10 @@ jobs:
 
       - name: Install xmllint
         run: sudo apt-get install -y libxml2-utils
-
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          path: VCG_temp
       # clone CESM
       - uses: actions/checkout@v4
         with:
@@ -34,23 +37,13 @@ jobs:
         run: |
           ./bin/git-fleximod update
 
+  
       # Checkout the correct visualCaseGen branch
       - name: Checkout initial event (Pull Request)
-        if: ${{ github.event_name == 'pull_request' }}
         run: |
           echo "Handling pull request"
           cd visualCaseGen/
-          git fetch origin pull/${{ github.event.pull_request.number }}/head:pr-${{ github.event.pull_request.number }}
-          git checkout pr-${{ github.event.pull_request.number }}
-          git submodule update --init
-
-      - name: Checkout initial event (Push)
-        if: ${{ github.event_name == 'push' }}
-        run: |
-          echo "Handling push"
-          cd visualCaseGen/
-          git checkout ${{ github.sha }}
-          git submodule update --init
+          cp -r ../VCG_temp/* .
 
       # set up conda
       - uses: conda-incubator/setup-miniconda@v3
