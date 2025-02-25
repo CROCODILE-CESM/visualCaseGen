@@ -36,7 +36,8 @@ jobs:
         env:
           GIT_CLONE_PROTECTION_ACTIVE: false
         run: |
-          ./CESM/bin/git-fleximod update
+          cd CESM
+          ./bin/git-fleximod update
   
       # Checkout the correct visualCaseGen branch
       - name: Checkout initial event
