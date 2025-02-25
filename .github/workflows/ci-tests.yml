@@ -37,7 +37,8 @@ jobs:
           GIT_CLONE_PROTECTION_ACTIVE: false
         run: |
           ./bin/git-fleximod update
-
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
   
       # Checkout the correct visualCaseGen branch
       - name: Checkout initial event
