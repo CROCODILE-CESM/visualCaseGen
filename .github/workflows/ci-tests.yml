@@ -7,7 +7,8 @@ on:
     branches: [ "main", "ci" ]
   pull_request:
     branches: [ "main", "ci" ]
-
+env:
+  VCGTEMPPATH: ${{ github.workspace }}/VCGTEMP/ # See the checkout step below for the path
 jobs:
   ci_tests:
     name: visualCaseGen CI tests
@@ -22,7 +23,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: recursive
-          path: VCG_temp
+          path: $VCGTEMPPATH
       # clone CESM
       - uses: actions/checkout@v4
         with:
@@ -39,11 +40,9 @@ jobs:
 
   
       # Checkout the correct visualCaseGen branch
-      - name: Checkout initial event (Pull Request)
+      - name: Checkout initial event
         run: |
-          echo "Handling pull request"
-          cd visualCaseGen/
-          cp -r ../VCG_temp/* .
+          cp -r $VCGTEMPPATH/* visualCaseGen/
 
       # set up conda
       - uses: conda-incubator/setup-miniconda@v3
