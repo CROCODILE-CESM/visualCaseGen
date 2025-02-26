@@ -34,7 +34,7 @@ jobs:
           #submodules: recursive
 
       # Run git-fleximod
-      - name: checkout CESM
+      - name: Checkout CESM submodules
         env:
           GIT_CLONE_PROTECTION_ACTIVE: false
         run: |
