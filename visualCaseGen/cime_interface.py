@@ -39,7 +39,7 @@ class CIME_interface:
         List of resolutions (alias, compset, not_compset)
     """
 
-    def __init__(self, cesmroot=None):
+    def __init__(self, cesmroot=None, machine = None):
 
         # Set cimeroot attribute and import CIME modules
         self._set_cimeroot(cesmroot)
@@ -63,6 +63,7 @@ class CIME_interface:
         self._files = None
         self._grids_obj = None
         self.din_loc_root = None
+        self.machine = machine
 
         # Call _retrieve* methods to populate the data members defined above
         self._retrieve_cime_basics()
@@ -552,7 +553,6 @@ class CIME_interface:
         from CIME.XML.machines import Machines
 
         machs_file = self._files.get_value("MACHINES_SPEC_FILE")
-        self.machine = None
         self.cime_output_root = None
         self.din_loc_root = None
         self.project_required = {}
